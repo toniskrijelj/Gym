@@ -21,109 +21,25 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class HelloApplication extends Application {
-	final String path="C:\\podaci\\korisnici.txt";
-	
+	public static String path="C:\\podaci\\korisnici.txt";
+	public static Scene scena;
+	public static MainMenu mainMenu;
+	public static NoviKorisnik noviKorisnik;
+	public static PrikaziKorisnike prikaziKorisnike;
 	
     @Override
     public void start(Stage primaryStage){
-        try{
-            VBox root = new VBox();
-            root.setAlignment(Pos.CENTER);
-            Button b1 = new Button("NOVI KORISNIK"), b2 = new Button("POSTOJECI KORISNIK");
-            root.getChildren().add(b1);
-            root.getChildren().add(b2);
-
-            Scene scene = new Scene(root, 500, 500);
-            VBox nk = new VBox();
-            nk.setAlignment(Pos.CENTER);
-            Label lIme = new Label("IME:");
-            lIme.setMinWidth(50);
-            TextField tIme = new TextField();
-            Button dodaj = new Button("DODAJ");
-            nk.getChildren().add(lIme);
-            nk.getChildren().add(tIme);
-            //
-            nk.getChildren().add(dodaj);
-            
-            VBox pk = new VBox();
-            pk.setAlignment(Pos.CENTER);
-            TextField search = new TextField();
-            ListView<String> l = new ListView<>();
-            pk.getChildren().add(search);
-            pk.getChildren().add(l);
-            ArrayList<String> korisnici = new ArrayList<>();
-            root.setSpacing(10);
-            nk.setSpacing(10);
-            pk.setSpacing(10);
-
-            b1.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent actionEvent) {
-                    scene.setRoot(nk);
-                }
-            });
-            b2.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent actionEvent) {
-                    try {
-                        Scanner fr = new Scanner(new File(path));
-                        while(fr.hasNext()){
-                            String s = ((fr.nextLine()).split(";"))[0];
-                            korisnici.add(s);
-                            l.getItems().add(s);
-                        }
-                        fr.close();
-                    } catch (IOException e){
-                        //warn
-                        System.out.println("Nije uspelo otvaranje fajla");
-                        e.printStackTrace();
-                    }
-                    scene.setRoot(pk);
-                }
-            });
-            search.setOnKeyTyped(new EventHandler<KeyEvent>() {
-                @Override
-                public void handle(KeyEvent keyEvent) {
-                    l.getItems().clear();
-                    for(String s : korisnici){
-                        if(s.startsWith(search.getText())){
-                            l.getItems().add(s);
-                        }
-                    }
-                }
-            });
-            dodaj.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent actionEvent) {
-                    try {
-                        Scanner fr = new Scanner(new File(path));
-                        StringBuilder postojeci= new StringBuilder();
-                        while(fr.hasNext()){
-                            postojeci.append(fr.nextLine()+'\n');
-                        }
-                        fr.close();
-                        FileWriter fw = new FileWriter(path);
-                        if(!tIme.getText().equals("")) {
-                            fw.write(postojeci + tIme.getText()+";\n");
-                        }
-                        else throw new IOException();
-                        fw.close();
-                    } catch (IOException e){
-                        //warn
-                        System.out.println("Nije uspelo upisivanje");
-                        e.printStackTrace();
-                    }
-                    scene.setRoot(root);
-                }
-            });
-           // gp.setStyle("-fx-background-color: #000000");
-            scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
+    	mainMenu = new MainMenu();
+    	noviKorisnik = new NoviKorisnik();
+    	prikaziKorisnike = new PrikaziKorisnike();
+    	
+        Scene scene = new Scene(mainMenu, 500, 500);
+        scena=scene;
+      
+       // gp.setStyle("-fx-background-color: #000000");
+        scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 
 
