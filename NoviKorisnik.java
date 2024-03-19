@@ -13,9 +13,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
-public class NoviKorisnik extends VBox implements IEkran{
+public class NoviKorisnik extends VBox{
 
-	public NoviKorisnik() {
+	private static final NoviKorisnik noviKorisnik = new NoviKorisnik();
+	private NoviKorisnik() {
         setAlignment(Pos.CENTER);
         Label lIme = new Label("IME:");
         lIme.setMinWidth(50);
@@ -30,7 +31,7 @@ public class NoviKorisnik extends VBox implements IEkran{
             @Override
             public void handle(ActionEvent actionEvent) {
             	dodajKorisnika(tIme.getText());
-                HelloApplication.mainMenu.prikazi();
+                MainMenu.prikazi();
             }
         });
 	}
@@ -56,8 +57,7 @@ public class NoviKorisnik extends VBox implements IEkran{
         }
 	}
 	
-	@Override
-	public void prikazi() {
-		HelloApplication.scena.setRoot(this);
+	public static void prikazi() {
+		HelloApplication.scena.setRoot(noviKorisnik);
 	}
 }

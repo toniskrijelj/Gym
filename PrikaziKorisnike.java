@@ -14,14 +14,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 
-public class PrikaziKorisnike extends VBox implements IEkran{
+public class PrikaziKorisnike extends VBox{
 
+	private static final PrikaziKorisnike prikaziKorisnike = new PrikaziKorisnike();
+	
 	private ArrayList<String> korisnici;
 	
 	private TextField search;
 	private ListView<String> lista;
 	
-	public PrikaziKorisnike() {
+	private PrikaziKorisnike() {
         setAlignment(Pos.CENTER);
         
         search = new TextField();
@@ -30,7 +32,7 @@ public class PrikaziKorisnike extends VBox implements IEkran{
         btn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-            	HelloApplication.mainMenu.prikazi();
+            	MainMenu.prikazi();
             }
         });
         
@@ -54,9 +56,7 @@ public class PrikaziKorisnike extends VBox implements IEkran{
         
         setSpacing(10);
 	}
-
-	@Override
-	public void prikazi() {
+	private void ucitaj() {
 		try {
 			search.clear();
 			korisnici.clear();
@@ -74,6 +74,10 @@ public class PrikaziKorisnike extends VBox implements IEkran{
             System.out.println("Nije uspelo otvaranje fajla");
             e.printStackTrace();
         }
-		HelloApplication.scena.setRoot(this);
+	}
+
+	public static void prikazi() {
+		prikaziKorisnike.ucitaj();
+		HelloApplication.scena.setRoot(prikaziKorisnike);
 	}
 }

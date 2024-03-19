@@ -23,22 +23,24 @@ import java.util.Scanner;
 public class HelloApplication extends Application {
 	public static String path="C:\\podaci\\korisnici.txt";
 	public static Scene scena;
-	public static MainMenu mainMenu;
-	public static NoviKorisnik noviKorisnik;
-	public static PrikaziKorisnike prikaziKorisnike;
 	
     @Override
     public void start(Stage primaryStage){
-    	mainMenu = new MainMenu();
-    	noviKorisnik = new NoviKorisnik();
-    	prikaziKorisnike = new PrikaziKorisnike();
     	
-        Scene scene = new Scene(mainMenu, 500, 500);
-        scena=scene;
+    	/*try {
+			FileWriter fw = new FileWriter("G:\\My Drive\\podaci.txt");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+    	
+    	VBox p = new VBox();
+        scena = new Scene(p, 500, 500);
       
-       // gp.setStyle("-fx-background-color: #000000");
-        scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
-        primaryStage.setScene(scene);
+        MainMenu.prikazi();
+        
+        scena.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+        primaryStage.setScene(scena);
         primaryStage.show();
     }
 

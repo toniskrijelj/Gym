@@ -11,9 +11,11 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 
-public class MainMenu extends VBox implements IEkran{
+public class MainMenu extends VBox{
+
+	private static final MainMenu mainMenu = new MainMenu();
 	
-	public MainMenu(){
+	private MainMenu(){
 		setAlignment(Pos.CENTER);
         Button b1 = new Button("NOVI KORISNIK"), b2 = new Button("POSTOJECI KORISNIK");
         getChildren().add(b1);
@@ -23,20 +25,21 @@ public class MainMenu extends VBox implements IEkran{
         b1.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-            	HelloApplication.noviKorisnik.prikazi();
+            	NoviKorisnik.prikazi();
             }
         });
         
         b2.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                HelloApplication.prikaziKorisnike.prikazi();
+                PrikaziKorisnike.prikazi();
             }
         });
 	}
+	
 
-	@Override
-	public void prikazi() {
-		HelloApplication.scena.setRoot(this);
+	
+	public static void prikazi() {
+		HelloApplication.scena.setRoot(mainMenu);
 	}
 }
