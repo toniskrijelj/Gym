@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
 public class PrikaziKorisnike extends VBox{
@@ -28,6 +29,13 @@ public class PrikaziKorisnike extends VBox{
         
         search = new TextField();
         lista = new ListView<>();
+        lista.setMinHeight(600);
+        lista.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+            	//KorisnikEkran.prikazi(lista.getSelectionModel().getSelectedItem());
+            }
+        });
         Button btn = new Button("NAZAD");
         btn.setOnAction(new EventHandler<ActionEvent>() {
             @Override

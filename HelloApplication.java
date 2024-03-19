@@ -35,7 +35,7 @@ public class HelloApplication extends Application {
 		}*/
     	
     	VBox p = new VBox();
-        scena = new Scene(p, 500, 500);
+        scena = new Scene(p, 1000, 1000);
       
         MainMenu.prikazi();
         

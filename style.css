@@ -6,12 +6,15 @@
 .button, .label{
     -fx-background-color: #f3ca20;
     -fx-text-fill:#000000;
-    -fx-font-size:20px;
+    -fx-font-size:40px;
     -fx-font-weight:900;
     -fx-font-family: "Anton";
     -fx-alignment:center;
 }
-
+.text-field, .list-view {
+    -fx-background-color: #a9a9a9 , white , white;
+	-fx-font-size:40px;
+}
 .root{
     -fx-background-color: #000000;
 }
