@@ -20,19 +20,25 @@ public class NoviKorisnik extends VBox{
         setAlignment(Pos.CENTER);
         Label lIme = new Label("IME:");
         lIme.setMinWidth(50);
+        Label lPrezime = new Label("PREZIME:");
+        lPrezime.setMinWidth(50);
         TextField tIme = new TextField();
+        TextField tPrezime = new TextField();
         Button dodaj = new Button("DODAJ");
         Button nazad = new Button("NAZAD");
         getChildren().add(nazad);
         getChildren().add(lIme);
         getChildren().add(tIme);
+        getChildren().add(lPrezime);
+        getChildren().add(tPrezime);
         getChildren().add(dodaj);
+        
         setSpacing(10);
 
         dodaj.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-            	dodajKorisnika(tIme.getText());
+            	dodajKorisnika(tIme.getText(), tPrezime.getText());
                 MainMenu.prikazi();
             }
         });
@@ -44,25 +50,9 @@ public class NoviKorisnik extends VBox{
         });
 	}
 
-	private void dodajKorisnika(String korisnik) {
-		try {
-            Scanner fr = new Scanner(new File(HelloApplication.path));
-            StringBuilder postojeci= new StringBuilder();
-            while(fr.hasNext()){
-                postojeci.append(fr.nextLine()+'\n');
-            }
-            fr.close();
-            FileWriter fw = new FileWriter(HelloApplication.path);
-            if(!korisnik.equals("")) {
-                fw.write(postojeci + korisnik+";\n");
-            }
-            else throw new IOException();
-            fw.close();
-        } catch (IOException e){
-            //warn
-            System.out.println("Nije uspelo upisivanje");
-            e.printStackTrace();
-        }
+	private void dodajKorisnika(String ime, String prezime) {
+		//Korisnici.
+		
 	}
 	
 	public static void prikazi() {

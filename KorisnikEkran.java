@@ -46,7 +46,7 @@ public class KorisnikEkran extends VBox{
 	}
 	
 	private void setKorisnik(Korisnik korisnik) {
-		ime.setText(korisnik.getIme());
+		ime.setText(korisnik.ime);
 	}
 	
 	public static void prikazi(Korisnik korisnik) {

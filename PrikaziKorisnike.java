@@ -36,37 +36,19 @@ public class PrikaziKorisnike extends VBox{
         
         TableView<Korisnik> tabela = new TableView<Korisnik>();
         ArrayList<Korisnik> svi = new ArrayList<>();
-        svi.add(new Korisnik("ad", "be", 0));
-        svi.add(new Korisnik("ggg", "ee", 0));
-        ObservableList<Korisnik> korisnici = FXCollections.observableArrayList(svi);
-        TableColumn prvaKol = new TableColumn("Ime");
-        prvaKol.setMinWidth(200);
-        prvaKol.setCellValueFactory(
-                new PropertyValueFactory<Korisnik, String>("ime"));
- 
-        TableColumn drugaKol = new TableColumn("Prezime");
-        drugaKol.setMinWidth(200);
-        drugaKol.setCellValueFactory(
-                new PropertyValueFactory<Korisnik, String>("prezime"));
- 
-        TableColumn trecaKol = new TableColumn("ID");
-        trecaKol.setMinWidth(200);
-        trecaKol.setCellValueFactory(
-                new PropertyValueFactory<Korisnik, String>("id"));
- 
-        tabela.setItems(korisnici);
-        tabela.getColumns().addAll(prvaKol, drugaKol, trecaKol);
+        
+        
         
         
         
         search = new TextField();
         
-        tabela.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        /*tabela.setOnMouseClicked(new EventHandler<MouseEvent>() {
         	@Override
             public void handle(MouseEvent mouseEvent) {
             	KorisnikEkran.prikazi(tabela.getSelectionModel().getSelectedItem());
             }
-		});
+		});*/
         /*lista = new ListView<>();
         lista.setMinHeight(600);
         lista.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -93,8 +75,8 @@ public class PrikaziKorisnike extends VBox{
             public void handle(KeyEvent keyEvent) {
                 tabela.getItems().clear();
                 for(Korisnik k : svi){//mora arraylist jer "korisnici" se brisu gore
-                	System.out.println(k.getIme());
-                    if(k.getIme().startsWith(search.getText())){
+                	System.out.println(k.ime);
+                    if(k.ime.startsWith(search.getText())){
                         tabela.getItems().add(k);
                     }
                 }
