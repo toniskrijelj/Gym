@@ -15,22 +15,38 @@ public class KorisnikEkran extends VBox{
 	
 	private KorisnikEkran(){
 		setAlignment(Pos.CENTER);
+		setSpacing(10);
 		
 		ime = new Label();
         Button btn = new Button("NAZAD");
+        boolean imaClanarinu = true;
+        Label clanarina = new Label();
+        Button prijaviDolazak = new Button("PRIJAVI DOLAZAK");
+        Button uplatiClanarinu = new Button("UPLATI CLANARINU");
+        getChildren().add(btn);
+        getChildren().add(ime);
+        getChildren().add(clanarina);
+        if(!imaClanarinu) {
+        	clanarina.setStyle("-fx-background-color: green");
+        	clanarina.setText("IMA CLANARINU");
+        	getChildren().add(prijaviDolazak);
+        }
+        else {
+        	clanarina.setStyle("-fx-background-color: red");
+        	clanarina.setText("NEMA CLANARINU");
+        	getChildren().add(uplatiClanarinu);
+        }
+        //TODO: popup uspesno prijavljen dolazak/dodata clanarina
         btn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
             	PrikaziKorisnike.prikazi();
             }
         });
-        
-        getChildren().add(ime);
-        getChildren().add(btn);
 	}
 	
 	private void setKorisnik(Korisnik korisnik) {
-		
+		ime.setText(korisnik.getIme());
 	}
 	
 	public static void prikazi(Korisnik korisnik) {

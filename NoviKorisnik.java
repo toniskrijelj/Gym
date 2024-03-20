@@ -22,6 +22,8 @@ public class NoviKorisnik extends VBox{
         lIme.setMinWidth(50);
         TextField tIme = new TextField();
         Button dodaj = new Button("DODAJ");
+        Button nazad = new Button("NAZAD");
+        getChildren().add(nazad);
         getChildren().add(lIme);
         getChildren().add(tIme);
         getChildren().add(dodaj);
@@ -31,6 +33,12 @@ public class NoviKorisnik extends VBox{
             @Override
             public void handle(ActionEvent actionEvent) {
             	dodajKorisnika(tIme.getText());
+                MainMenu.prikazi();
+            }
+        });
+        nazad.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
                 MainMenu.prikazi();
             }
         });

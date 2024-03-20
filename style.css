@@ -11,10 +11,18 @@
     -fx-font-family: "Anton";
     -fx-alignment:center;
 }
-.text-field, .list-view {
+.text-field, .list-view{
     -fx-background-color: #a9a9a9 , white , white;
 	-fx-font-size:40px;
 }
+
+.table-view, .table-view .filler, .table-view .column-header-background, .table-view .column-header{
+	-fx-background-color: #f3ca20;
+	-fx-font-size:40px;
+}
+
+
+
 .root{
     -fx-background-color: #000000;
 }
