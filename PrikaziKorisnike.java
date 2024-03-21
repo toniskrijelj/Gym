@@ -26,37 +26,25 @@ public class PrikaziKorisnike extends VBox{
 
 	private static final PrikaziKorisnike prikaziKorisnike = new PrikaziKorisnike();
 	
-	//private ArrayList<Korisnik> korisnici;
-	
 	private TextField search;
-	//private ListView<String> lista;
+	private ListView<String> lista;
 	
 	private PrikaziKorisnike() {
         setAlignment(Pos.CENTER);
         
-        TableView<Korisnik> tabela = new TableView<Korisnik>();
-        ArrayList<Korisnik> svi = new ArrayList<>();
-        
-        
-        
-        
-        
         search = new TextField();
         
-        /*tabela.setOnMouseClicked(new EventHandler<MouseEvent>() {
-        	@Override
-            public void handle(MouseEvent mouseEvent) {
-            	KorisnikEkran.prikazi(tabela.getSelectionModel().getSelectedItem());
-            }
-		});*/
-        /*lista = new ListView<>();
+        lista = new ListView<>();
         lista.setMinHeight(600);
         lista.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-            	//KorisnikEkran.prikazi(lista.getSelectionModel().getSelectedItem());
+            	String korisnik = lista.getSelectionModel().getSelectedItem();
+            	if(korisnik == null || korisnik.equals("")) return;
+            	int id = Integer.parseInt(korisnik.split(" ")[2]);
+            	KorisnikEkran.prikazi(Korisnici.find(id));
             }
-        });*/
+        });
         Button btn = new Button("NAZAD");
         btn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -67,17 +55,17 @@ public class PrikaziKorisnike extends VBox{
         
         getChildren().add(btn);
         getChildren().add(search);
-        getChildren().add(tabela);
+        getChildren().add(lista);
         
         
         search.setOnKeyTyped(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
-                tabela.getItems().clear();
-                for(Korisnik k : svi){//mora arraylist jer "korisnici" se brisu gore
+                lista.getItems().clear();
+                for(Korisnik k : Korisnici.lista) {
                 	System.out.println(k.ime);
                     if(k.ime.startsWith(search.getText())){
-                        tabela.getItems().add(k);
+                        lista.getItems().add(k.ime+" "+k.prezime+" "+k.id);
                     }
                 }
             }
@@ -85,28 +73,16 @@ public class PrikaziKorisnike extends VBox{
         
         setSpacing(10);
 	}
-	/*private void ucitaj() {
-		try {
-			search.clear();
-			korisnici.clear();
-			lista.getItems().clear();
-		
-            Scanner fr = new Scanner(new File(HelloApplication.path));
-            while(fr.hasNext()){
-                String s = ((fr.nextLine()).split(";"))[0];
-                korisnici.add(s);
-                lista.getItems().add(s);
-            }
-            fr.close();
-        } catch (IOException e){
-            //TODO warn
-            System.out.println("Nije uspelo otvaranje fajla");
-            e.printStackTrace();
+	private void ucitaj() {
+		search.clear();
+		lista.getItems().clear();
+		for(Korisnik k : Korisnici.lista) {
+        	lista.getItems().add(k.ime+" "+k.prezime+" "+k.id);
         }
-	}*/
+	}
 
 	public static void prikazi() {
-		//prikaziKorisnike.ucitaj();
+		prikaziKorisnike.ucitaj();
 		HelloApplication.scena.setRoot(prikaziKorisnike);
 	}
 }

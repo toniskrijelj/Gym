@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class Korisnici {
 	private static final Korisnici korisnici = new Korisnici();
 	
-	ArrayList<Korisnik> lista;
+	public static ArrayList<Korisnik> lista;
 	
 	private Korisnici() {
 		lista = new ArrayList<>();
@@ -44,7 +44,7 @@ public class Korisnici {
 		int tipClanarine = Integer.parseInt(str[4]);
 		int brojTreninga = Integer.parseInt(str[5]);
 		String dolazak=str[6];
-		return new Korisnik(ime, prezime, dolazak, new Clanarina(datumClanarine, tipClanarine, brojTreninga));
+		return new Korisnik(id, ime, prezime, dolazak, new Clanarina(datumClanarine, tipClanarine, brojTreninga));
 	}
 	
 	private void ispisi() {
@@ -56,16 +56,16 @@ public class Korisnici {
         try{
         	File f2 = new File(HelloApplication.path2);
         	if(f2.exists()) f2.delete();
-        	else f2.mkdirs();
+        	//else f2.mkdirs();
         	
         	File f = new File(HelloApplication.path);
         	if(!f.exists()) {
-        		f.mkdirs();
+        		//f.mkdirs();
         		f.createNewFile();
         	}
         	File tmp = new File(HelloApplication.tempPath);
         	if(!tmp.exists()) {
-        		tmp.mkdirs();
+        		//tmp.mkdirs();
         		tmp.createNewFile();
         	}
         	
@@ -92,7 +92,27 @@ public class Korisnici {
 		return s.toString();
 	}
 	
-	public static void dodaj(Korisnik k) {
-		lista.add(k);
+	public static void dodaj(String ime, String prezime) {
+		int id=find_id();
+		korisnici.lista.add(new Korisnik(id,ime,prezime));
+		korisnici.ispisi();
+	}
+	
+	private static int find_id() {
+		int id=0;
+		for(int i=0; i<korisnici.lista.size(); i++) {
+			id=Math.max(id, korisnici.lista.get(i).id+1);
+		}
+		return id;
+	}
+	
+	public static Korisnik find(int id) {
+		for(int i=0; i<korisnici.lista.size(); i++) {
+			if(korisnici.lista.get(i).id==id) {
+				return korisnici.lista.get(i);
+			}
+		}
+		System.out.print("neradi");
+		return null;
 	}
 }

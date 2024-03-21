@@ -9,30 +9,6 @@ public class Korisnik {
 	public String dolazak;
 	public Clanarina clanarina;
 	
-	public String getPrezime() {
-		return prezime;
-	}
-
-	public void setPrezime(String prezime) {
-		this.prezime = prezime;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public void setIme(String ime) {
-		this.ime = ime;
-	}
-
-	public String getIme(){
-		return ime;
-	}
-	
 	public Korisnik(int id, String ime, String prezime) {
 		this(id, ime,prezime,LocalDate.EPOCH.toString(), new Clanarina());
 	}

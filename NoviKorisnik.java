@@ -51,7 +51,7 @@ public class NoviKorisnik extends VBox{
 	}
 
 	private void dodajKorisnika(String ime, String prezime) {
-		//Korisnici.
+		Korisnici.dodaj(ime, prezime);
 		
 	}
 	
