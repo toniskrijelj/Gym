@@ -75,11 +75,16 @@ public class Korisnici {
         	
         	f.renameTo(f2);
         	tmp.renameTo(f);
+        	//obrisi f2
         }
         catch(Exception e) {
         	// RIP podaci
         }
 	}
+	public static void save() {
+		korisnici.ispisi();
+	}
+	
 	private String ispisi(Korisnik k) {
 		StringBuilder s = new StringBuilder();
 		s.append(k.id+";");

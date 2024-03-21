@@ -12,11 +12,13 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.skin.TableHeaderRow;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -27,24 +29,48 @@ public class PrikaziKorisnike extends VBox{
 	private static final PrikaziKorisnike prikaziKorisnike = new PrikaziKorisnike();
 	
 	private TextField search;
-	private ListView<String> lista;
+	TableView<Korisnik> tabela;
 	
 	private PrikaziKorisnike() {
         setAlignment(Pos.CENTER);
         
+        tabela = new TableView<Korisnik>();
+
+        //ObservableList<Korisnik> korisnici = FXCollections.observableArrayList();
+        TableColumn prvaKol = new TableColumn("Ime");
+        prvaKol.setMinWidth(200);
+        prvaKol.setCellValueFactory(
+                new PropertyValueFactory<Korisnik, String>("ime"));
+ 
+        TableColumn drugaKol = new TableColumn("Prezime");
+        drugaKol.setMinWidth(200);
+        drugaKol.setCellValueFactory(
+                new PropertyValueFactory<Korisnik, String>("prezime"));
+ 
+        TableColumn trecaKol = new TableColumn("ID");
+        trecaKol.setMinWidth(200);
+        trecaKol.setCellValueFactory(
+                new PropertyValueFactory<Korisnik, String>("id"));
+ 
+        //tabela.setItems(korisnici);
+        tabela.getColumns().addAll(prvaKol, drugaKol, trecaKol);
+        
+        
+        
         search = new TextField();
         
-        lista = new ListView<>();
-        lista.setMinHeight(600);
-        lista.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
+        tabela.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        	@Override
             public void handle(MouseEvent mouseEvent) {
-            	String korisnik = lista.getSelectionModel().getSelectedItem();
-            	if(korisnik == null || korisnik.equals("")) return;
-            	int id = Integer.parseInt(korisnik.split(" ")[2]);
-            	KorisnikEkran.prikazi(Korisnici.find(id));
+        		if(tabela.getSelectionModel().getSelectedItem() != null) {
+        			KorisnikEkran.prikazi(tabela.getSelectionModel().getSelectedItem());
+        		}
+        		
             }
-        });
+		});
+        
+        tabela.setPlaceholder(new Label("Nema rezultata"));
+        
         Button btn = new Button("NAZAD");
         btn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -55,17 +81,18 @@ public class PrikaziKorisnike extends VBox{
         
         getChildren().add(btn);
         getChildren().add(search);
-        getChildren().add(lista);
+        getChildren().add(tabela);
         
+        
+
         
         search.setOnKeyTyped(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
-                lista.getItems().clear();
-                for(Korisnik k : Korisnici.lista) {
-                	System.out.println(k.ime);
-                    if(k.ime.startsWith(search.getText())){
-                        lista.getItems().add(k.ime+" "+k.prezime+" "+k.id);
+                tabela.getItems().clear();
+                for(Korisnik k : Korisnici.lista){
+                    if(k.getIme().startsWith(search.getText())){
+                        tabela.getItems().add(k);
                     }
                 }
             }
@@ -75,14 +102,18 @@ public class PrikaziKorisnike extends VBox{
 	}
 	private void ucitaj() {
 		search.clear();
-		lista.getItems().clear();
+		tabela.getItems().clear();
 		for(Korisnik k : Korisnici.lista) {
-        	lista.getItems().add(k.ime+" "+k.prezime+" "+k.id);
+			tabela.getItems().add(k);
         }
 	}
 
 	public static void prikazi() {
 		prikaziKorisnike.ucitaj();
 		HelloApplication.scena.setRoot(prikaziKorisnike);
+		prikaziKorisnike.tabela.getSelectionModel().clearSelection();
+		prikaziKorisnike.tabela.applyCss();
+        TableHeaderRow header = (TableHeaderRow) prikaziKorisnike.tabela.lookup("TableHeaderRow");
+        header.setMouseTransparent(true);
 	}
 }

@@ -43,6 +43,7 @@ public class KorisnikEkran extends VBox{
             @Override
             public void handle(ActionEvent actionEvent) {
             	korisnik.dolazak = LocalDate.now().toString();
+            	Korisnici.save();
             	PrikaziKorisnike.prikazi();
             }
         });
@@ -51,6 +52,7 @@ public class KorisnikEkran extends VBox{
             @Override
             public void handle(ActionEvent actionEvent) {
             	korisnik.clanarina = new Clanarina(LocalDate.now().toString(), 0);
+            	Korisnici.save();
             	PrikaziKorisnike.prikazi();
             }
         });
