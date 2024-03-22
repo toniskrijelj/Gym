@@ -97,10 +97,11 @@ public class Korisnici {
 		return s.toString();
 	}
 	
-	public static void dodaj(String ime, String prezime) {
+	public static int dodaj(String ime, String prezime) {
 		int id=find_id();
 		korisnici.lista.add(new Korisnik(id,ime,prezime));
 		korisnici.ispisi();
+		return id;
 	}
 	
 	private static int find_id() {

@@ -32,11 +32,12 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage primaryStage) {
     	VBox p = new VBox();
-        scena = new Scene(p, 1000, 1000);
+        scena = new Scene(p, 1150, 1000);
       
         MainMenu.prikazi();
         
         scena.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+        primaryStage.setResizable(false);
         primaryStage.setScene(scena);
         primaryStage.show();
     }
