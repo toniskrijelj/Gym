@@ -1,11 +1,17 @@
 package teretana;
 
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import javafx.scene.control.Alert;
 
 public class Korisnici {
 	private static final Korisnici korisnici = new Korisnici();
@@ -19,19 +25,25 @@ public class Korisnici {
 	
 	private void ucitaj() {
 		try {
-            Scanner fr = new Scanner(new File(HelloApplication.path));
+			File f = new File(HelloApplication.path);
+			if(!f.exists()) return;
+			
+            Scanner fr = new Scanner(f);
             while(fr.hasNext()){
                 String s = fr.nextLine();  
                 try {
                 	lista.add(ucitaj(s));
                 }
                 catch(Exception e) {
-                	
+                	/*preskacemo*/
                 }
             }
             fr.close();
         } catch (Exception e){
-        	
+        	Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("GRESKA!");
+            alert.setHeaderText("NEUSPESNO CITANJE IZ FILA\nPOZOVI 061 276 8858 TONI");
+            alert.show();
         }
 	}
 	
@@ -44,7 +56,7 @@ public class Korisnici {
 		int tipClanarine = Integer.parseInt(str[4]);
 		int brojTreninga = Integer.parseInt(str[5]);
 		String dolazak=str[6];
-		return new Korisnik(id, ime, prezime, dolazak, new Clanarina(datumClanarine, tipClanarine, brojTreninga));
+		return new Korisnik(id, ime, prezime, dolazak, new Clanarina(LocalDate.parse(datumClanarine), tipClanarine, brojTreninga));
 	}
 	
 	private void ispisi() {
@@ -54,35 +66,45 @@ public class Korisnici {
         	if(i+1 < lista.size()) postojeci.append('\n');
         }
         try{
+        	File folder = new File(HelloApplication.folderPath);
+        	folder.mkdir();
+        	
         	File f2 = new File(HelloApplication.path2);
         	if(f2.exists()) f2.delete();
-        	//else f2.mkdirs();
         	
         	File f = new File(HelloApplication.path);
-        	if(!f.exists()) {
-        		//f.mkdirs();
-        		f.createNewFile();
-        	}
+        	if(!f.exists()) f.createNewFile();
+        	
         	File tmp = new File(HelloApplication.tempPath);
-        	if(!tmp.exists()) {
-        		//tmp.mkdirs();
-        		tmp.createNewFile();
-        	}
+        	if(!tmp.exists())  tmp.createNewFile();
         	
         	FileWriter fw = new FileWriter(HelloApplication.tempPath);
         	fw.write(postojeci.toString());
         	fw.close();
         	
-        	f.renameTo(f2);
-        	tmp.renameTo(f);
-        	//obrisi f2
+        	if(!f.renameTo(f2) || !tmp.renameTo(f)) {
+        		Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("GRESKA!");
+                alert.setHeaderText("NEUSPESNO MENJANJE IME FAJLA\nPOZOVI 061 276 8858 TONI");
+                alert.show();
+        	}
+        	
+        	File backup = new File(HelloApplication.backupPath);
+        	if(backup.exists()) {
+        		String backupFile = LocalDate.now().toString() + "-" + LocalTime.now().format(DateTimeFormatter.ofPattern("HH-mm-ss")) + ".txt";
+        		Files.copy(
+        				Path.of(HelloApplication.path), 
+        				Path.of(HelloApplication.backupPath + backupFile), 
+        				StandardCopyOption.REPLACE_EXISTING);
+        	}
         }
         catch(Exception e) {
-        	// RIP podaci
+        	Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("GRESKA!");
+            alert.setHeaderText("NEUSPESNO PISANJE U FILE\nPOZOVI 061 276 8858 TONI");
+            alert.setContentText("POKUSAJ PONOVO\n" + e.toString());
+            alert.show();
         }
-	}
-	public static void save() {
-		korisnici.ispisi();
 	}
 	
 	private String ispisi(Korisnik k) {
@@ -97,28 +119,22 @@ public class Korisnici {
 		return s.toString();
 	}
 	
+	public static void save() {
+		korisnici.ispisi();
+	}
+	
 	public static int dodaj(String ime, String prezime) {
 		int id=find_id();
-		korisnici.lista.add(new Korisnik(id,ime,prezime));
-		korisnici.ispisi();
+		lista.add(new Korisnik(id,ime,prezime));
+		save();
 		return id;
 	}
 	
 	private static int find_id() {
 		int id=0;
-		for(int i=0; i<korisnici.lista.size(); i++) {
-			id=Math.max(id, korisnici.lista.get(i).id+1);
+		for(int i=0; i<lista.size(); i++) {
+			id=Math.max(id, lista.get(i).id+1);
 		}
 		return id;
-	}
-	
-	public static Korisnik find(int id) {
-		for(int i=0; i<korisnici.lista.size(); i++) {
-			if(korisnici.lista.get(i).id==id) {
-				return korisnici.lista.get(i);
-			}
-		}
-		System.out.print("neradi");
-		return null;
 	}
 }
