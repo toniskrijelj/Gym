@@ -15,13 +15,15 @@ public class KorisnikEkran extends VBox{
 	private static final KorisnikEkran korisnikEkran = new KorisnikEkran();
 	
 	private Korisnik korisnik;
-	private Label imeLabel, clanarinaLabel, prijavljenLabel, brojTreningaLabel, clanarinaDoLabel;
+	private Label imeLabel, clanarinaLabel, brojTreningaLabel, clanarinaDoLabel;
+	private VBox prijavljenBox;
 	private Button prijaviDolazak, uplatiClanarinu;
+	private ClickDelay clickDelay;
 	
 	private KorisnikEkran(){
 		setAlignment(Pos.CENTER);
 		setSpacing(10);
-		setPadding(new Insets(50));
+		setPadding(new Insets(20));
 		
 		imeLabel = new Label();
 		imeLabel.setStyle("-fx-font-size:60px;");
@@ -46,14 +48,18 @@ public class KorisnikEkran extends VBox{
         
         prijaviDolazak = new Button("PRIJAVI DOLAZAK");
         uplatiClanarinu = new Button("UPLATI CLANARINU");
-        prijavljenLabel = new Label("VEC PRIJAVLJEN");
+        Label prijavljenLabel = new Label("VEC PRIJAVLJEN");
         prijavljenLabel.setStyle("-fx-font-size:50px;");
+        prijavljenBox = new VBox();
+        prijavljenBox.setAlignment(Pos.CENTER);
+        prijavljenBox.getChildren().add(prijavljenLabel);
+        prijavljenBox.setMinSize(0, 112);
         
         getChildren().add(nazadVBox);
         getChildren().add(imeLabel);
         getChildren().add(opisClanarine);
         
-        setMargin(imeLabel, new Insets(50,0,40,0));
+        setMargin(imeLabel, new Insets(91,0,40,0));
 
         nazadBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -64,6 +70,7 @@ public class KorisnikEkran extends VBox{
         prijaviDolazak.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+            	if(!clickDelay.clickable()) return;
             	PopupEkran.prikazi("PRIJAVI DOLAZAK ZA " + korisnik.ime + " " + korisnik.prezime + " " + korisnik.id + "?",
             	() -> {
             		PopupEkran.prikazi("USPESNO STE PRIJAVILI DOLAZAK ZA\n" + korisnik.ime + " " + korisnik.prezime + " " + korisnik.id,
@@ -82,6 +89,7 @@ public class KorisnikEkran extends VBox{
         uplatiClanarinu.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+            	if(!clickDelay.clickable()) return;
             	ClanarineEkran.prikazi(korisnik);
             }
         });
@@ -92,7 +100,7 @@ public class KorisnikEkran extends VBox{
 
 		getChildren().remove(prijaviDolazak);
 		getChildren().remove(uplatiClanarinu);
-		getChildren().remove(prijavljenLabel);
+		getChildren().remove(prijavljenBox);
 		
 		if(!korisnik.imaClanarinu()) {
 			clanarinaLabel.setStyle("-fx-background-color: red");
@@ -116,10 +124,11 @@ public class KorisnikEkran extends VBox{
         	if(korisnik.clanarina.brojTreninga <= 12) brojTreningaLabel.setText("OSTALO TRENINGA: " + korisnik.clanarina.brojTreninga);
         	else brojTreningaLabel.setText("OSTALO TRENINGA: NEOGRANICENO");
         	
-        	if(korisnik.dolazak.equals(LocalDate.now().toString())) getChildren().add(prijavljenLabel);
+        	if(korisnik.dolazak.equals(LocalDate.now().toString())) getChildren().add(prijavljenBox);
         	else getChildren().add(prijaviDolazak);
         }
 		imeLabel.setText(korisnik.ime + " " + korisnik.prezime + " " + korisnik.id);
+		clickDelay = new ClickDelay(0.4);
 	}
 	
 	public static void prikazi(Korisnik korisnik) {

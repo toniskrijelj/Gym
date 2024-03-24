@@ -20,10 +20,12 @@ public class MainMenu extends VBox{
 		naslov.setStyle("-fx-font-size:75px");
 		
         Button noviBtn = new Button("NOVI KORISNIK"), postojeciBtn = new Button("POSTOJECI KORISNIK");
+        Button istekliBtn = new Button("PREGLED ISTEKLIH CLANARINA");
         
         getChildren().add(naslov);
         getChildren().add(noviBtn);
         getChildren().add(postojeciBtn);
+        getChildren().add(istekliBtn);
         
         setMargin(naslov,new Insets(0,0,100,0));
         
@@ -38,6 +40,13 @@ public class MainMenu extends VBox{
             @Override
             public void handle(ActionEvent actionEvent) {
                 PrikaziKorisnike.prikazi();
+            }
+        });
+        
+        istekliBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                IstekleClanarine.prikazi();
             }
         });
 	}

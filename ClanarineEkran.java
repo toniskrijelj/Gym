@@ -13,11 +13,12 @@ public class ClanarineEkran extends VBox{
 	
 	private Korisnik korisnik;
 	private Label naslov;
+	private ClickDelay clickDelay;
 	
 	private ClanarineEkran(){
 		setAlignment(Pos.CENTER);
-		setPadding(new Insets(20,20,20,20));
-        setSpacing(20);
+		setPadding(new Insets(20));
+        setSpacing(10);
 		
 		VBox nazadVBox = new VBox();
 		nazadVBox.setAlignment(Pos.CENTER_LEFT);
@@ -37,7 +38,7 @@ public class ClanarineEkran extends VBox{
         getChildren().add(naslov);
         for(int i=0; i<4; i++)  getChildren().add(tipBtn[i]);
 
-        setMargin(naslov,new Insets(100,0,50,0));
+        setMargin(naslov,new Insets(0,0,12,0));
         
         nazadBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -50,6 +51,7 @@ public class ClanarineEkran extends VBox{
 	    	tipBtn[i].setOnAction(new EventHandler<ActionEvent>() {
 	            @Override
 	            public void handle(ActionEvent actionEvent) {
+	            	if(!clickDelay.clickable()) return;
 	            	PopupEkran.prikazi(buttonText(br), 
 	            		() -> {
 		            		korisnik.clanarina = new Clanarina(br);
@@ -71,6 +73,7 @@ public class ClanarineEkran extends VBox{
 	
 	
 	public static void prikazi(Korisnik korisnik) {
+		clanarineEkran.clickDelay = new ClickDelay(0.4);
 		clanarineEkran.korisnik = korisnik;
 		clanarineEkran.naslov.setText("UPLATA ZA: " + korisnik.ime + " " + korisnik.prezime + " " + korisnik.id);
 		HelloApplication.scena.setRoot(clanarineEkran);

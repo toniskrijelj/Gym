@@ -10,6 +10,10 @@ public class ClickDelay {
 		this(LocalTime.now().plusSeconds(seconds));
 	}
 	
+	public ClickDelay(double seconds) {
+		this(LocalTime.now().plusNanos((long)(1000000000*seconds)));
+	}
+	
 	public ClickDelay(LocalTime when) {
 		this.when = when;
 	}

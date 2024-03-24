@@ -66,7 +66,7 @@ public class PopupEkran extends VBox{
 	}
 	
 	private void init(String poruka, Runnable yesAction, Runnable noAction) {
-		clickDelay = new ClickDelay(1);
+		clickDelay = new ClickDelay(0.45);
 
 		this.poruka.setText(poruka);
 		this.yesAction = yesAction;
@@ -80,7 +80,7 @@ public class PopupEkran extends VBox{
 	}
 	
 	private void init(String poruka, Runnable okAction) {
-		clickDelay = new ClickDelay(1);
+		clickDelay = new ClickDelay(0.30);
 		
 		this.poruka.setText(poruka);
 		this.okAction = okAction;

@@ -7,6 +7,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class NoviKorisnik extends VBox{
@@ -20,11 +21,17 @@ public class NoviKorisnik extends VBox{
         setPadding(new Insets(50,50,50,50));
         setSpacing(10);
         
-        VBox nazadVBox = new VBox();
-        nazadVBox.setAlignment(Pos.TOP_LEFT);
+        HBox hbox = new HBox();
+        hbox.setAlignment(Pos.TOP_LEFT);
         
         Button nazadBtn = new Button("NAZAD");
-        nazadVBox.getChildren().add(nazadBtn);
+        Label naslov = new Label("NOVI KORISNIK");
+        naslov.setStyle("-fx-font-size:65px;");
+        
+        hbox.getChildren().add(nazadBtn);
+        hbox.getChildren().add(naslov);
+        
+        HBox.setMargin(naslov, new Insets(0,0,0,220));
  
         Label imeLabel = new Label("IME:");
         Label prezimeLabel = new Label("PREZIME:");
@@ -37,7 +44,7 @@ public class NoviKorisnik extends VBox{
         Button dodaj = new Button("DODAJ");
   
     
-        getChildren().add(nazadVBox);
+        getChildren().add(hbox);
         getChildren().add(imeLabel);
         getChildren().add(imeField);
         getChildren().add(prezimeLabel);

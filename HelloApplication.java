@@ -16,7 +16,7 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage primaryStage) {
     	VBox p = new VBox();
-        scena = new Scene(p, 1150, 1000);
+        scena = new Scene(p, 1300, 800);
       
         MainMenu.prikazi();
         
