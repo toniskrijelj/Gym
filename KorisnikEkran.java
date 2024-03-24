@@ -71,9 +71,9 @@ public class KorisnikEkran extends VBox{
             @Override
             public void handle(ActionEvent actionEvent) {
             	if(!clickDelay.clickable()) return;
-            	PopupEkran.prikazi("PRIJAVI DOLAZAK ZA " + korisnik.ime + " " + korisnik.prezime + " " + korisnik.id + "?",
+            	PopupEkran.prikazi("PRIJAVI DOLAZAK ZA " + korisnik.ime + " " + korisnik.prezime + " (" + korisnik.id + ") ?",
             	() -> {
-            		PopupEkran.prikazi("USPESNO STE PRIJAVILI DOLAZAK ZA\n" + korisnik.ime + " " + korisnik.prezime + " " + korisnik.id,
+            		PopupEkran.prikazi("USPESNO STE PRIJAVILI DOLAZAK ZA\n" + korisnik.ime + " " + korisnik.prezime + " (" + korisnik.id + ")",
         				() -> {
         					korisnik.dolazak = LocalDate.now().toString();
                         	korisnik.clanarina.brojTreninga--;
@@ -127,7 +127,7 @@ public class KorisnikEkran extends VBox{
         	if(korisnik.dolazak.equals(LocalDate.now().toString())) getChildren().add(prijavljenBox);
         	else getChildren().add(prijaviDolazak);
         }
-		imeLabel.setText(korisnik.ime + " " + korisnik.prezime + " " + korisnik.id);
+		imeLabel.setText(korisnik.ime + " " + korisnik.prezime + " (" + korisnik.id + ")");
 		clickDelay = new ClickDelay(0.4);
 	}
 	

@@ -57,7 +57,7 @@ public class ClanarineEkran extends VBox{
 		            		korisnik.clanarina = new Clanarina(br);
 		            		Korisnici.save();
 		            		PopupEkran.prikazi("USPESNO STE UPLATILI CLANARINU " + Clanarina.opis[br] + " ZA\n" 
-		            							+ korisnik.ime + " " + korisnik.prezime + " " + korisnik.id, 
+		            							+ korisnik.ime + " " + korisnik.prezime + " (" + korisnik.id + ")", 
 		            							() -> KorisnikEkran.prikazi(korisnik));
 		            	}, 
 	            		() -> ClanarineEkran.prikazi(korisnik)
@@ -68,14 +68,14 @@ public class ClanarineEkran extends VBox{
 	}
 	
 	private String buttonText(int i) {
-		return "UPLATITI " + Clanarina.opis[i] + " ZA " + korisnik.ime + " " + korisnik.prezime + " " + korisnik.id + " ?";
+		return "UPLATITI " + Clanarina.opis[i] + " ZA " + korisnik.ime + " " + korisnik.prezime + " (" + korisnik.id + ") ?";
 	}
 	
 	
 	public static void prikazi(Korisnik korisnik) {
 		clanarineEkran.clickDelay = new ClickDelay(0.4);
 		clanarineEkran.korisnik = korisnik;
-		clanarineEkran.naslov.setText("UPLATA ZA: " + korisnik.ime + " " + korisnik.prezime + " " + korisnik.id);
+		clanarineEkran.naslov.setText("UPLATA ZA: " + korisnik.ime + " " + korisnik.prezime + " (" + korisnik.id + ")");
 		HelloApplication.scena.setRoot(clanarineEkran);
 	}
 }

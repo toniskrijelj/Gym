@@ -1,5 +1,7 @@
 package teretana;
 
+import java.time.LocalDate;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -39,7 +41,11 @@ public class IstekleClanarine extends VBox {
  
         TableColumn<Korisnik,String> cetvrtaKol = new TableColumn<Korisnik,String>("Datum Isteka");
         cetvrtaKol.setMinWidth(300);
-        cetvrtaKol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().clanarina.istice.toString()));
+        cetvrtaKol.setCellValueFactory(cellData -> 
+        {
+        	if(cellData.getValue().clanarina.datum.equals(LocalDate.EPOCH)) return new SimpleStringProperty("Nije imao");
+        	return new SimpleStringProperty(cellData.getValue().clanarina.istice.toString());
+        });
         
         tabela.getColumns().add(prvaKol);
         tabela.getColumns().add(drugaKol);
