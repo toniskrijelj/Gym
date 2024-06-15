@@ -87,11 +87,6 @@ public class PrikaziKorisnike extends VBox{
             }
         });
         
-        getChildren().add(btn);
-        getChildren().add(search);
-        getChildren().add(lista);
-        
-        
         search.setOnKeyTyped(new EventHandler<KeyEvent>() {
         	@Override
         	public void handle(KeyEvent keyEvent) {
@@ -126,9 +121,5 @@ public class PrikaziKorisnike extends VBox{
 	public static void prikazi() {
 		prikaziKorisnike.init();
 		HelloApplication.scena.setRoot(prikaziKorisnike);
-		tabela.getSelectionModel().clearSelection();
-		tabela.applyCss();
-        TableHeaderRow header = (TableHeaderRow) tabela.lookup("TableHeaderRow");
-        header.setMouseTransparent(true);
 	}
 }
