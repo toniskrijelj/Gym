@@ -4,15 +4,23 @@
 }
 
 .button, .label{
-    -fx-background-color: #f3ca20;
-    -fx-text-fill:#000000;
-    -fx-font-size:40px;
-    -fx-font-weight:900;
-    -fx-font-family: "Anton";
+	-fx-background-color: #f3ca20;
+	-fx-text-fill:#000000;
+	-fx-font-weight:900;
+	-fx-font-family: "Anton";
     -fx-alignment:center;
 }
-.text-field, .list-view{
-    -fx-background-color: #a9a9a9 , white , white;
+
+.button{
+    -fx-font-size:50px;
+}
+
+.label{
+    -fx-font-size:40px;
+    -fx-padding: 0 20 0 20;
+}
+.text-field{
+    -fx-background-color: #a9a9a9, white, white;
 	-fx-font-size:40px;
 }
 
@@ -21,7 +29,17 @@
 	-fx-font-size:40px;
 }
 
+.table-view .column-header .label {
+    -fx-alignment: CENTER-LEFT;
+}
 
+.table-view:row-selection .table-row-cell:filled:hover {
+    -fx-background-color: #dfdfdf;
+}
+
+.button:hover{
+	-fx-background-color: #c39a00;
+}
 
 .root{
     -fx-background-color: #000000;
