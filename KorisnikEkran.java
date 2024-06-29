@@ -119,7 +119,7 @@ public class KorisnikEkran extends VBox{
         	clanarinaDoLabel.setVisible(true);
         	brojTreningaLabel.setVisible(true);
         	
-        	clanarinaDoLabel.setText("CLANARINA DO: " + korisnik.clanarina.istice.format(DateTimeFormatter.ofPattern("dd-MM-uuuu")));
+        	clanarinaDoLabel.setText("CLANARINA DO: " + korisnik.clanarina.istice.format(DateTimeFormatter.ofPattern("dd.MM.uuuu.")));
         	
         	if(korisnik.clanarina.brojTreninga <= 12) brojTreningaLabel.setText("OSTALO TRENINGA: " + korisnik.clanarina.brojTreninga);
         	else brojTreningaLabel.setText("OSTALO TRENINGA: NEOGRANICENO");

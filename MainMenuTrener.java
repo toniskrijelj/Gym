@@ -9,11 +9,12 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class MainMenu extends VBox{
+public class MainMenuTrener extends VBox{
 
-	private static final MainMenu mainMenu = new MainMenu();
+	private static final MainMenuTrener mainMenuTrener = new MainMenuTrener();
+	private static int broj;
 	
-	private MainMenu(){
+	private MainMenuTrener(){
 		setAlignment(Pos.CENTER);
 		setPadding(new Insets(50,50,50,50));
         setSpacing(20);
@@ -21,13 +22,14 @@ public class MainMenu extends VBox{
         HBox hbox = new HBox();
         hbox.setAlignment(Pos.TOP_LEFT);
 		
-		Label naslov = new Label("TERETANA");
+        Button odjavaBtn = new Button("ODJAVA");
+        Label naslov = new Label("TERETANA");
 		naslov.setStyle("-fx-font-size:75px");
-		Button odjavaBtn = new Button("ODJAVA");
 		
-        Button noviBtn = new Button("NOVI KORISNIK"), postojeciBtn = new Button("POSTOJECI KORISNIK");
-        Button istekliBtn = new Button("PREGLED ISTEKLIH CLANARINA");
-        
+        Button noviBtn = new Button("NOVI KLIJENT");
+        Button prikazBtn = new Button("PREGLED KLIJENATA");
+        Button treninziBtn = new Button("PREGLED TRENINGA");
+
         hbox.getChildren().add(odjavaBtn);
         hbox.getChildren().add(naslov);
         
@@ -35,8 +37,8 @@ public class MainMenu extends VBox{
         
         getChildren().add(hbox);
         getChildren().add(noviBtn);
-        getChildren().add(postojeciBtn);
-        getChildren().add(istekliBtn);
+        getChildren().add(prikazBtn);
+        getChildren().add(treninziBtn);
         
         setMargin(naslov,new Insets(0,0,100,0));
         setMargin(odjavaBtn, new Insets(0,0,50,0));
@@ -51,26 +53,27 @@ public class MainMenu extends VBox{
         noviBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-            	NoviKorisnik.prikazi();
+            	NoviKlijent.prikazi(broj);
             }
         });
         
-        postojeciBtn.setOnAction(new EventHandler<ActionEvent>() {
+        prikazBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                PrikaziKorisnike.prikazi();
+                PrikaziKlijente.prikazi(broj);
             }
         });
         
-        istekliBtn.setOnAction(new EventHandler<ActionEvent>() {
+        treninziBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                IstekleClanarine.prikazi();
+                PrikaziTreninge.prikazi(broj);
             }
         });
 	}
 	
-	public static void prikazi() {
-		HelloApplication.scena.setRoot(mainMenu);
+	public static void prikazi(int broj) {
+		MainMenuTrener.broj = broj;
+		HelloApplication.scena.setRoot(mainMenuTrener);
 	}
 }

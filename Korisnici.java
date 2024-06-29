@@ -50,13 +50,15 @@ public class Korisnici {
 	private Korisnik ucitaj(String s) {
 		String[] str = s.split(";");
 		int id = Integer.parseInt(str[0]);
-		String ime = str[1];
-		String prezime = str[2];
-		String datumClanarine = str[3];
-		int tipClanarine = Integer.parseInt(str[4]);
-		int brojTreninga = Integer.parseInt(str[5]);
-		String dolazak=str[6];
-		return new Korisnik(id, ime, prezime, dolazak, new Clanarina(LocalDate.parse(datumClanarine), tipClanarine, brojTreninga));
+		int idTrener = Integer.parseInt(str[1]);
+		String ime = str[2];
+		String prezime = str[3];
+		String datumClanarine = str[4];
+		int tipClanarine = Integer.parseInt(str[5]);
+		int brojTreninga = Integer.parseInt(str[6]);
+		String dolazak=str[7];
+		String zakazanTrening=str[8];
+		return new Korisnik(id, idTrener, ime, prezime, dolazak, new Clanarina(LocalDate.parse(datumClanarine), tipClanarine, brojTreninga), zakazanTrening);
 	}
 	
 	private void ispisi() {
@@ -110,12 +112,14 @@ public class Korisnici {
 	private String ispisi(Korisnik k) {
 		StringBuilder s = new StringBuilder();
 		s.append(k.id+";");
+		s.append(k.idTrener+";");
 		s.append(k.ime+";");
 		s.append(k.prezime+";");
 		s.append(k.clanarina.datum+";");
 		s.append(k.clanarina.tip+";");
 		s.append(k.clanarina.brojTreninga+";");
 		s.append(k.dolazak+";");
+		s.append(k.zakazanTrening+";");
 		return s.toString();
 	}
 	

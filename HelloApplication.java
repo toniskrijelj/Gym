@@ -12,13 +12,15 @@ public class HelloApplication extends Application {
 	public static String tempPath="C:\\podaci\\temp.txt";
 	public static String backupPath="G:\\My Drive\\";
 	public static Scene scena;
+	public static String loginPath="C:\\podaci\\sifre.txt";
+	public static String pathKlijenti="C:\\podaci\\klijenti.txt";
 	
     @Override
     public void start(Stage primaryStage) {
     	VBox p = new VBox();
         scena = new Scene(p, 1300, 800);
       
-        MainMenu.prikazi();
+        Login.prikazi();
         
         scena.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
         primaryStage.setResizable(false);

@@ -44,3 +44,19 @@
 .root{
     -fx-background-color: #000000;
 }
+
+#yesButton{
+	-fx-background-color: #009900;
+}
+
+#yesButton:hover{
+	-fx-background-color: #007700;
+}
+
+#noButton{
+	-fx-background-color: #c00000;
+}
+
+#noButton:hover{
+	-fx-background-color: #880000;
+}
