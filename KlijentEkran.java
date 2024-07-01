@@ -9,6 +9,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class KlijentEkran extends VBox{
@@ -30,10 +31,15 @@ public class KlijentEkran extends VBox{
 		zakazanTreningLabel = new Label();
 		zakazanTreningLabel.setStyle("-fx-font-size:60px;");
 		
-		VBox nazadVBox = new VBox();
+		Button obrisiBtn = new Button("OBRISI");
+		obrisiBtn.setStyle("-fx-background-color: red");
+		
+		HBox nazadVBox = new HBox();
+		nazadVBox.setSpacing(800);
 		nazadVBox.setAlignment(Pos.CENTER_LEFT);
 		Button nazadBtn = new Button("NAZAD");
         nazadVBox.getChildren().add(nazadBtn);
+        nazadVBox.getChildren().add(obrisiBtn);
         
         zakaziTrening = new Button("ZAKAZI TRENING");
         otkaziTrening = new Button("OTKAZI TRENING");
@@ -62,6 +68,14 @@ public class KlijentEkran extends VBox{
             public void handle(ActionEvent actionEvent) {
             	PopupEkran.prikazi("OTKAZATI TRENING ZA " + klijent.ime, 
             		() -> {klijent.zakazanTrening = LocalDate.EPOCH.toString(); Korisnici.save(); KlijentEkran.prikazi(klijent, dosaoOd);},
+            		() -> {KlijentEkran.prikazi(klijent, dosaoOd);});
+            }
+        });
+        obrisiBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+            	PopupEkran.prikazi("OBRISATI KLIJENTA " + klijent.ime, 
+            		() -> {int ID=klijent.idTrener; klijent.idTrener = 0; Korisnici.save(); MainMenuTrener.prikazi(ID);},
             		() -> {KlijentEkran.prikazi(klijent, dosaoOd);});
             }
         });

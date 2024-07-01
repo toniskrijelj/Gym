@@ -9,6 +9,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class KorisnikEkran extends VBox{
@@ -34,10 +35,15 @@ public class KorisnikEkran extends VBox{
 		brojTreningaLabel = new Label();
 		clanarinaDoLabel = new Label();
 		
-		VBox nazadVBox = new VBox();
+		Button obrisiBtn = new Button("OBRISI");
+		obrisiBtn.setStyle("-fx-background-color: red");
+		
+		HBox nazadVBox = new HBox();
+		nazadVBox.setSpacing(800);
 		nazadVBox.setAlignment(Pos.CENTER_LEFT);
 		Button nazadBtn = new Button("NAZAD");
         nazadVBox.getChildren().add(nazadBtn);
+        nazadVBox.getChildren().add(obrisiBtn);
 		
 		VBox opisClanarine = new VBox();
 		opisClanarine.setPadding(new Insets(0, 0, 50, 0));
@@ -91,6 +97,14 @@ public class KorisnikEkran extends VBox{
             public void handle(ActionEvent actionEvent) {
             	if(!clickDelay.clickable()) return;
             	ClanarineEkran.prikazi(korisnik);
+            }
+        });
+        obrisiBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+            	PopupEkran.prikazi("OBRISATI KORISNIKA " + korisnik.ime, 
+            		() -> {Korisnici.lista.remove(korisnik); Korisnici.save(); MainMenu.prikazi();},
+            		() -> {KorisnikEkran.prikazi(korisnik);});
             }
         });
 	}
